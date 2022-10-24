@@ -52,7 +52,7 @@ class CreateBcsQuestion(QuestionsBase):
 
 class BcsQuestionOut(QuestionsBase):
     bcs:int
-    # topic_id:Optional[int]
+    topic_id:Optional[int]
     id:int
     topic:QuestionTopic
 
@@ -62,7 +62,7 @@ class BcsQuestionOut(QuestionsBase):
 class BcsOut(BcsBase):
     special:Optional[str]
     exam_year:str
-    questions:List[BcsQuestionOut]
+    # questions:List[BcsQuestionOut]
 
     class Config:
         orm_mode=True

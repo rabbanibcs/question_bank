@@ -39,6 +39,16 @@ async def get_question_by_bcs(ordinal:int,db:Session=Depends(get_db)):
     
     return query.all()
 
+# fetch questions by bcs and topi_id
+@router.get("/{ordinal}/{topic_id}/",response_model=List[schemas.BcsQuestionOut])
+async def get_question_by_bcs_with_topic_id(ordinal:int,topic_id:int,db:Session=Depends(get_db)):
+    query=db.query(models.BcsQuestion).filter(models.BcsQuestion.bcs==ordinal).filter(models.BcsQuestion.topic_id==topic_id)
+    print(query)
+    
+    return query.all()
+
+
+
 # update a question
 @router.put("/{id}",response_model=schemas.BcsQuestionOut)
 async def update_question(id:int,question:schemas.CreateBcsQuestion , db:Session=Depends(get_db)):

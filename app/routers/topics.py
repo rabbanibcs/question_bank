@@ -28,9 +28,20 @@ async def get_topics(db:Session=Depends(get_db)):
     return query.all()
 
 
+# search questions by topic name
+@router.get("/questions/",response_model=List[schemas.BcsQuestionOut])
+async def get_questions_with_topic_name(search:str,db:Session=Depends(get_db)):
+    print(search)
+    query=db.query(models.BcsQuestion).join(models.Topic,
+    models.BcsQuestion.topic_id==models.Topic.id).filter(models.Topic.name.contains(search))
+    print(query)
+    return query.all()
+    # return {"topic":search}
+
 # fetch questions by topic_id
 @router.get("/{id}",response_model=List[schemas.BcsQuestionOut])
 async def get_questions_with_topic_id(id:int,db:Session=Depends(get_db)):
     query=db.query(models.BcsQuestion).filter(models.BcsQuestion.topic_id==id)
     print(query)
     return query.all()
+

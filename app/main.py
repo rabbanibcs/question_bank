@@ -3,12 +3,24 @@ from .database import LocalSession,engine
 from fastapi import FastAPI,Request,Response
 from . import models
 from .routers import users,bcs,questions,topics,bcs_questions
+from fastapi.middleware.cors import CORSMiddleware
 
 
 # disabled for Alembic
 # models.Base.metadata.create_all(bind=engine)
 
 app=FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(topics.router)
 app.include_router(bcs.router)
 app.include_router(bcs_questions.router)
